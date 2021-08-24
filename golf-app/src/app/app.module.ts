@@ -15,14 +15,17 @@ import { MatCardModule } from '@angular/material/card';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatTableModule } from '@angular/material/table';
 import { GameSetupComponent } from './components/game-setup/game-setup.component';
+import { ScorecardComponent } from './components/scorecard/scorecard.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     TopNavbarComponent,
-    GameSetupComponent
+    GameSetupComponent,
+    ScorecardComponent
   ],
   imports: [
     BrowserModule,
@@ -36,7 +39,8 @@ import { GameSetupComponent } from './components/game-setup/game-setup.component
     MatCardModule,
     MatSelectModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatTableModule
   ],
   providers: [],
   bootstrap: [AppComponent]
