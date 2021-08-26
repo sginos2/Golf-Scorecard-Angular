@@ -15,4 +15,8 @@ export class GameSetupComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  startGame(): void {
+    this.router.navigate(['./scorecard']);
+  }
+
 }
