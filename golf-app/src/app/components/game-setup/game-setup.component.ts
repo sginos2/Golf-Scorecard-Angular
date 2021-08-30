@@ -9,8 +9,9 @@ import { HttpClient } from '@angular/common/http';
 })
 export class GameSetupComponent implements OnInit {
 
-  course: any;
-  courses = [];
+  courseData: any;
+  teeBoxData: any;
+  players = [];
 
   constructor(
     private router: Router,
@@ -19,12 +20,22 @@ export class GameSetupComponent implements OnInit {
 
   ngOnInit(): void {
     this.http.get("https://golf-courses-api.herokuapp.com/courses")
-    .subscribe(Response => {
-      console.log(Response);
-      this.course = Response;
-      this.courses = this.course;
+    .subscribe(data => {
+      Object.entries(data).map(entry => {
+        this.courseData = entry[1];
+      })
     })
+    // this.http.get("https://golf-courses-api.herokuapp.com/courses/18300")
+    // .subscribe(data => {
+    //   Object.entries(data).map(entry => {
+    //     this.teeBoxData = entry[1].holes[0].teeBoxes[0].teeType.toUpperCase();
+    //     console.log(this.teeBoxData);
+    //     console.log(entry);
+    //   })
+    // })
   }
+
+
 
   startGame(): void {
     this.router.navigate(['./scorecard']);

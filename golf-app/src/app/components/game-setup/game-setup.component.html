@@ -1,14 +1,10 @@
 <div class="main-container">
     <h1>Welcome to Golf Scorecard!</h1>
-    <pre>{{courses | json}}</pre>
     <div>
         <mat-form-field>
-            <mat-label>Select a Course</mat-label>
-            <!-- THIS IS DUMMY DATA. YOU HAVE TO CONNECT TO THE API TO GRAB THE COURSES AND INFO -->
+            <mat-label >Select a Course</mat-label>
             <mat-select required>
-                <mat-option value="foxHollow">Fox Hollow</mat-option>
-                <mat-option value="thanksgivingPoint">Thanksgiving Point</mat-option>
-                <mat-option value="ranches">Ranches</mat-option>
+                <mat-option *ngFor="let course of courseData">{{course.name}}</mat-option>
             </mat-select>
         </mat-form-field>
     </div>

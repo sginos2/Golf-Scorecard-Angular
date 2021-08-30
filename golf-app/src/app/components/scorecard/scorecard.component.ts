@@ -9,8 +9,7 @@ import { HttpClient } from '@angular/common/http';
 
 export class ScorecardComponent implements OnInit {
 
-  course: any;
-  courses = [];
+  courseData: any = [];
 
   constructor(
     private http: HttpClient
@@ -18,10 +17,9 @@ export class ScorecardComponent implements OnInit {
 
   ngOnInit(): void {
     this.http.get("https://golf-courses-api.herokuapp.com/courses")
-    .subscribe(Response => {
-      console.log(Response);
-      this.course = Response;
-      this.courses = this.course.list;
+    .subscribe(data => {
+      this.courseData.push(data);
+      console.log(this.courseData);
     })
   }
 
