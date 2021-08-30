@@ -4,7 +4,7 @@
         <mat-form-field>
             <mat-label >Select a Course</mat-label>
             <mat-select required>
-                <mat-option *ngFor="let course of courseData">{{course.name}}</mat-option>
+                <mat-option *ngFor="let course of courseData" value={{course.name}}>{{course.name}}</mat-option>
             </mat-select>
         </mat-form-field>
     </div>
@@ -13,20 +13,27 @@
             <mat-label>Select a Teebox</mat-label>
             <!-- THIS IS DUMMY DATA. YOU HAVE TO CONNECT TO THE API TO GRAB THE COURSES AND INFO -->
             <mat-select required>
-                <mat-option value="mens">Men's</mat-option>
-                <mat-option value="womens">Women's</mat-option>
                 <mat-option value="pro">Pro</mat-option>
                 <mat-option value="champion">Champion</mat-option>
+                <mat-option value="women">Women</mat-option>
+                <mat-option value="men">Men</mat-option>
             </mat-select>
         </mat-form-field>
     </div>
     <div>
         <mat-form-field>
-            <input matInput type="text" placeholder="Add Player">
+            <input matInput [formControl]="playerNameFC" type="text" placeholder="Add Players (Up to 4)">
+            <mat-error *ngIf="playerNameFC.hasError('duplicate')">Duplicate Name</mat-error>
         </mat-form-field>
-        <button mat-mini-fab color="primary">
+        <button mat-mini-fab color="primary" (click)="addPlayer()" [disabled]="playerNameFC.invalid">
             <mat-icon>add</mat-icon>
         </button>
+        <ol>Players:
+            <li *ngFor="let player of players">{{player.name}}</li>
+        </ol>
     </div>
-    <button mat-raised-button color="primary" (click)="startGame()">Start Game</button>
+    <div>
+        <button mat-raised-button color="primary" (click)="startGame()" [disabled]="startGameFC.invalid">Start Game</button>
+        <mat-error *ngIf="startGameFC.hasError('noPlayers')">Please add players</mat-error>
+    </div>
 </div>
