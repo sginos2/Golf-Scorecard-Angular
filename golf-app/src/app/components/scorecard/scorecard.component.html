@@ -1,3 +1,24 @@
 <div class="main-container">
-    
+    <!-- do an *ngfor loop to generate cards for holes -->
+    <mat-card class="example-card">
+        <mat-card-header>
+          <mat-card-title>Hole 1</mat-card-title>
+          <mat-card-subtitle>Par: 3</mat-card-subtitle>
+          <mat-card-subtitle>Yardage: 225</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+            <div class="player">
+                <mat-label>Player 1</mat-label>
+                <input type="number" class="number">
+            </div>
+            <div class="player">
+                <mat-label>Player 2</mat-label>
+                <input type="number" class="number">
+            </div>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button>Save</button>
+        </mat-card-actions>
+      </mat-card>
+      
 </div>

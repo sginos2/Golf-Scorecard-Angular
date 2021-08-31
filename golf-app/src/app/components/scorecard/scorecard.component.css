@@ -4,3 +4,22 @@
     justify-content: center;
     height: calc(100% - 64px);
 }
+
+.example-card {
+    max-width: 400px;
+  }
+  
+mat-card-title {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.player {
+    padding: 10px;
+}
+
+.number {
+    width: 40px;
+    margin: 5px;
+}
+  
