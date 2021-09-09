@@ -1,8 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormControl, ValidatorFn, AbstractControl } from '@angular/forms';
-import { Player } from '../../interfaces/player'
+import { Player } from '../../interfaces/player';
+// import { GameDbService } from '../../services/game-db.service';
+
+@Injectable({
+  providedIn: 'root'
+})
 
 @Component({
   selector: 'app-game-setup',
@@ -17,10 +22,13 @@ export class GameSetupComponent implements OnInit {
   startGameFC = new FormControl(this.playerValidator());
   players: Player[] = [];
   playerId = 0;
+  selectedCourse: any;
+  selectedTeeBox: any;
 
   constructor(
     private router: Router,
-    private http: HttpClient
+    private http: HttpClient,
+    // private db: AngularFirestore
   ) { }
 
   ngOnInit(): void {
@@ -28,6 +36,16 @@ export class GameSetupComponent implements OnInit {
     .subscribe(data => {
       Object.entries(data).map(entry => {
         this.courseData = entry[1];
+      })
+    });
+  }
+
+  getCourseInfo(selectedCourse: any): void {
+    this.http.get(`https://golf-courses-api.herokuapp.com/courses/${selectedCourse}`)
+    .subscribe(data => {
+      Object.entries(data).map(entry => {
+        this.teeBoxData = entry[1].holes[0].teeBoxes;
+        console.log(this.teeBoxData);
       })
     })
   }
@@ -41,9 +59,7 @@ export class GameSetupComponent implements OnInit {
         scores: []
       });
       this.playerNameFC.setValue('');
-      console.log(this.players);
     }
-
   }
 
   nameValidator(): ValidatorFn {
@@ -71,6 +87,8 @@ export class GameSetupComponent implements OnInit {
   }
 
   startGame(): void {
+    //make sure players.length !== 0, make sure all dropdowns are selected
+    //on startGame, save course, teebox, and players to firebase.
     if (this.players.length !== 0) {
       this.router.navigate(['./scorecard']);
     } 

@@ -3,19 +3,16 @@
     <div>
         <mat-form-field>
             <mat-label >Select a Course</mat-label>
-            <mat-select required>
-                <mat-option *ngFor="let course of courseData" value={{course.name}}>{{course.name}}</mat-option>
+            <mat-select required [(ngModel)]="selectedCourse">
+                <mat-option *ngFor="let course of courseData" [value]="course.id">{{course.name}}</mat-option>
             </mat-select>
         </mat-form-field>
     </div>
     <div>
         <mat-form-field>
             <mat-label>Select a Teebox</mat-label>
-            <mat-select required>
-                <mat-option value="pro">Pro</mat-option>
-                <mat-option value="champion">Champion</mat-option>
-                <mat-option value="women">Women</mat-option>
-                <mat-option value="men">Men</mat-option>
+            <mat-select required [(ngModel)]="selectedTeeBox" (click)="getCourseInfo(selectedCourse)">
+                <mat-option *ngFor="let type of teeBoxData" [value]="type.teeType">{{type.teeType}}</mat-option>
             </mat-select>
         </mat-form-field>
     </div>
