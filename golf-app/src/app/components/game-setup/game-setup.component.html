@@ -29,7 +29,6 @@
         </ol>
     </div>
     <div>
-        <button mat-raised-button color="primary" (click)="startGame()" [disabled]="startGameFC.invalid">Start Game</button>
-        <mat-error *ngIf="startGameFC.hasError('noPlayers')">Please add players</mat-error>
+        <button mat-raised-button color="primary" (click)="startGame()">Start Game</button>
     </div>
 </div>

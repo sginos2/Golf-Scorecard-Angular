@@ -1,9 +1,9 @@
-import { Component, OnInit, Injectable } from '@angular/core';
+import { Component, OnInit, Injectable, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormControl, ValidatorFn, AbstractControl } from '@angular/forms';
 import { Player } from '../../interfaces/player';
-// import { GameDbService } from '../../services/game-db.service';
+
 
 @Injectable({
   providedIn: 'root'
@@ -15,20 +15,19 @@ import { Player } from '../../interfaces/player';
   styleUrls: ['./game-setup.component.css']
 })
 export class GameSetupComponent implements OnInit {
-
   courseData: any;
   teeBoxData: any;
   playerNameFC = new FormControl('', this.nameValidator());
-  startGameFC = new FormControl(this.playerValidator());
+  game: any;
   players: Player[] = [];
   playerId = 0;
   selectedCourse: any;
   selectedTeeBox: any;
+  errorMsg = 'Please fill out all fields';
 
   constructor(
     private router: Router,
     private http: HttpClient,
-    // private db: AngularFirestore
   ) { }
 
   ngOnInit(): void {
@@ -45,7 +44,6 @@ export class GameSetupComponent implements OnInit {
     .subscribe(data => {
       Object.entries(data).map(entry => {
         this.teeBoxData = entry[1].holes[0].teeBoxes;
-        console.log(this.teeBoxData);
       })
     })
   }
@@ -76,22 +74,16 @@ export class GameSetupComponent implements OnInit {
     };
   }
 
-  playerValidator(): ValidatorFn {
-    return (control: AbstractControl): { [key: string]: any } | null => {
-      let error = null;
-      if (this.players.length === 0) {
-        error = {noPlayers: true};
+  startGame(): any {
+    if(this.players.length !== 0 && this.selectedCourse !== undefined && this.selectedTeeBox !== undefined) {
+      this.game = {
+        courseId: this.selectedCourse,
+        teeBox: this.selectedTeeBox,
+        playerList: this.players
       };
-      return error;
-    }
-  }
-
-  startGame(): void {
-    //make sure players.length !== 0, make sure all dropdowns are selected
-    //on startGame, save course, teebox, and players to firebase.
-    if (this.players.length !== 0) {
+      localStorage.setItem('game', JSON.stringify(this.game))
       this.router.navigate(['./scorecard']);
-    } 
+    }
   }
 
 }
