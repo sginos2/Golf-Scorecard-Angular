@@ -54,7 +54,8 @@ export class GameSetupComponent implements OnInit {
       this.players.push({
         id: this.playerId.toString(),
         name: this.playerNameFC.value,
-        scores: []
+        scores: [],
+        totalScore: 0
       });
       this.playerNameFC.setValue('');
     }

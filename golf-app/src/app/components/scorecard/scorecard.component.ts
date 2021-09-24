@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { GameDbService } from '../../services/game-db.service';
 
 @Component({
   selector: 'app-scorecard',
@@ -18,9 +20,12 @@ export class ScorecardComponent implements OnInit {
   totalYards = 0;
   totalPar = 0;
   holesInfo: any[] = [];
+  finalScores: any[] = [];
 
   constructor(
     private http: HttpClient,
+    private snackBar: MatSnackBar,
+    private db: GameDbService
   ) { }
 
   ngOnInit(): void {
@@ -36,7 +41,7 @@ export class ScorecardComponent implements OnInit {
         for (let i = 0; i < 9; i++) {
           this.holesInfo.push(entry[1].holes[i]);
         }
-        this.getTeeboxInfo(this.currentTeeBox)
+        this.getTeeboxInfo(this.currentTeeBox);
       })
     })
   }
@@ -51,5 +56,28 @@ export class ScorecardComponent implements OnInit {
       })
     })
   }
+
+
+  keepScore(id: number, scores: any) {
+    for (let i = 0; i < this.currentPlayers.length; i++) {
+      if (this.currentPlayers[i].id === id) {
+        this.currentPlayers[i].totalScore += scores;
+      }
+    }
+  }
+
+  getFinalScores() {
+    let message = 'Final Scores: ';
+    let action = 'Close';
+    for (let i = 0; i < this.currentPlayers.length; i++) {
+      message += this.currentPlayers[i].name;
+      message += ' ';
+      message += (this.currentPlayers[i].totalScore - this.totalPar);
+      message += ' ';
+    }
+    this.db.saveGame(this.currentGame);
+    this.snackBar.open(message, action);
+  }
+
 
 }
